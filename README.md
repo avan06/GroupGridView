@@ -4,10 +4,9 @@ This is an Expandable/Collapsable grid view which extends DataGridView.
 
 ___
 
-![view1](https://raw.githubusercontent.com/avan06/GroupGridView/blob/master/view1.png)
-![view2](https://raw.githubusercontent.com/avan06/GroupGridView/blob/master/view2.png)
+![view1](https://raw.githubusercontent.com/avan06/GroupGridView/main/view1.png)
+![view2](https://raw.githubusercontent.com/avan06/GroupGridView/main/view2.png)
 
-___
 
 ## Attribute
 
