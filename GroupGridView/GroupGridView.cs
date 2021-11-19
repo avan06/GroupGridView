@@ -184,7 +184,7 @@ namespace GroupGridView
                             if (GroupByColumnsOnlyBeforeUnderlineEnabled)
                             {
                                 value1 = value1.Split('_')[0];
-                                value2 = value1.Split('_')[0];
+                                value2 = value2.Split('_')[0];
                             }
                             if (value1 != value2 || (!GroupByNullValueEnabled && value1 == ""))
                             {
