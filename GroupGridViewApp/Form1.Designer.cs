@@ -33,17 +33,17 @@ namespace GroupGridViewApp
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panelView = new System.Windows.Forms.Panel();
-            this.ToolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.ToolStripExpandAll = new System.Windows.Forms.ToolStripButton();
-            this.ToolStripCollapseAll = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.GroupGridView1 = new GroupGridView.GroupGridView();
             this.GroupOne = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GroupFactorTwo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OrderFactor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ToolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.ToolStripExpandAll = new System.Windows.Forms.ToolStripButton();
+            this.ToolStripCollapseAll = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.panelView.SuspendLayout();
-            this.ToolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GroupGridView1)).BeginInit();
+            this.ToolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelView
@@ -52,10 +52,66 @@ namespace GroupGridViewApp
             this.panelView.Controls.Add(this.ToolStrip1);
             this.panelView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelView.Location = new System.Drawing.Point(0, 0);
-            this.panelView.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panelView.Margin = new System.Windows.Forms.Padding(2);
             this.panelView.Name = "panelView";
             this.panelView.Size = new System.Drawing.Size(471, 311);
             this.panelView.TabIndex = 0;
+            // 
+            // GroupGridView1
+            // 
+            this.GroupGridView1.AllowUserToAddRows = false;
+            this.GroupGridView1.AllowUserToDeleteRows = false;
+            this.GroupGridView1.BackgroundColor = System.Drawing.Color.DimGray;
+            this.GroupGridView1.BaseRowColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.GroupGridView1.BaseRowColorEnabled = true;
+            this.GroupGridView1.BaseRowGroupOrder = GroupGridView.GroupGridView.Order.Ascending;
+            this.GroupGridView1.BaseRowGroupOrderColumn = -1;
+            this.GroupGridView1.BaseRowSingleGroupEnabled = false;
+            this.GroupGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.GroupGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.GroupOne,
+            this.GroupFactorTwo,
+            this.OrderFactor});
+            this.GroupGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.GroupGridView1.GridColor = System.Drawing.Color.Silver;
+            this.GroupGridView1.GroupByColumns = ((System.Collections.Generic.List<int>)(resources.GetObject("GroupGridView1.GroupByColumns")));
+            this.GroupGridView1.GroupByColumnsOnlyBeforeUnderlineEnabled = false;
+            this.GroupGridView1.GroupByEnabled = true;
+            this.GroupGridView1.GroupByNonsequenceEnabled = false;
+            this.GroupGridView1.GroupByNullValueEnabled = true;
+            this.GroupGridView1.Location = new System.Drawing.Point(0, 25);
+            this.GroupGridView1.Margin = new System.Windows.Forms.Padding(2);
+            this.GroupGridView1.Name = "GroupGridView1";
+            this.GroupGridView1.RowHeadersCollapse = ((System.Drawing.Bitmap)(resources.GetObject("GroupGridView1.RowHeadersCollapse")));
+            this.GroupGridView1.RowHeadersExpand = ((System.Drawing.Bitmap)(resources.GetObject("GroupGridView1.RowHeadersExpand")));
+            this.GroupGridView1.RowHeadersSeparater = ((System.Drawing.Bitmap)(resources.GetObject("GroupGridView1.RowHeadersSeparater")));
+            this.GroupGridView1.RowHeadersSeparaterEnd = ((System.Drawing.Bitmap)(resources.GetObject("GroupGridView1.RowHeadersSeparaterEnd")));
+            this.GroupGridView1.RowHeadersSeparaterWireEnabled = true;
+            this.GroupGridView1.RowHeadersWidth = 16;
+            this.GroupGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.GroupGridView1.Size = new System.Drawing.Size(471, 286);
+            this.GroupGridView1.TabIndex = 0;
+            // 
+            // GroupOne
+            // 
+            this.GroupOne.HeaderText = "GroupFactorOne";
+            this.GroupOne.MinimumWidth = 8;
+            this.GroupOne.Name = "GroupOne";
+            this.GroupOne.Width = 150;
+            // 
+            // GroupFactorTwo
+            // 
+            this.GroupFactorTwo.HeaderText = "GroupTwo";
+            this.GroupFactorTwo.MinimumWidth = 8;
+            this.GroupFactorTwo.Name = "GroupFactorTwo";
+            this.GroupFactorTwo.Width = 150;
+            // 
+            // OrderFactor
+            // 
+            this.OrderFactor.HeaderText = "OrderFactor";
+            this.OrderFactor.MinimumWidth = 8;
+            this.OrderFactor.Name = "OrderFactor";
+            this.OrderFactor.Width = 150;
             // 
             // ToolStrip1
             // 
@@ -97,76 +153,20 @@ namespace GroupGridViewApp
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
-            // GroupGridView1
-            // 
-            this.GroupGridView1.AllowUserToAddRows = false;
-            this.GroupGridView1.AllowUserToDeleteRows = false;
-            this.GroupGridView1.BackgroundColor = System.Drawing.Color.DimGray;
-            this.GroupGridView1.BaseRowColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.GroupGridView1.BaseRowColorEnabled = true;
-            this.GroupGridView1.BaseRowGroupOrder = GroupGridView.GroupGridView.Order.Ascending;
-            this.GroupGridView1.BaseRowGroupOrderColumn = -1;
-            this.GroupGridView1.BaseRowSingleGroupEnabled = false;
-            this.GroupGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GroupGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.GroupOne,
-            this.GroupFactorTwo,
-            this.OrderFactor});
-            this.GroupGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GroupGridView1.GridColor = System.Drawing.Color.Silver;
-            this.GroupGridView1.GroupByColumns = ((System.Collections.Generic.List<int>)(resources.GetObject("GroupGridView1.GroupByColumns")));
-            this.GroupGridView1.GroupByColumnsOnlyBeforeUnderlineEnabled = false;
-            this.GroupGridView1.GroupByEnabled = true;
-            this.GroupGridView1.GroupByNonsequenceEnabled = false;
-            this.GroupGridView1.GroupByNullValueEnabled = true;
-            this.GroupGridView1.Location = new System.Drawing.Point(0, 25);
-            this.GroupGridView1.Margin = new System.Windows.Forms.Padding(2);
-            this.GroupGridView1.Name = "GroupGridView1";
-            this.GroupGridView1.RowHeadersCollapse = ((System.Drawing.Bitmap)(resources.GetObject("GroupGridView1.RowHeadersCollapse")));
-            this.GroupGridView1.RowHeadersExpand = ((System.Drawing.Bitmap)(resources.GetObject("GroupGridView1.RowHeadersExpand")));
-            this.GroupGridView1.RowHeadersSeparater = ((System.Drawing.Bitmap)(resources.GetObject("GroupGridView1.RowHeadersSeparater")));
-            this.GroupGridView1.RowHeadersSeparaterEnd = ((System.Drawing.Bitmap)(resources.GetObject("GroupGridView1.RowHeadersSeparaterEnd")));
-            this.GroupGridView1.RowHeadersSeparaterWireEnabled = false;
-            this.GroupGridView1.RowHeadersWidth = 16;
-            this.GroupGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.GroupGridView1.Size = new System.Drawing.Size(471, 286);
-            this.GroupGridView1.TabIndex = 0;
-            // 
-            // GroupOne
-            // 
-            this.GroupOne.HeaderText = "GroupFactorOne";
-            this.GroupOne.MinimumWidth = 8;
-            this.GroupOne.Name = "GroupOne";
-            this.GroupOne.Width = 150;
-            // 
-            // GroupFactorTwo
-            // 
-            this.GroupFactorTwo.HeaderText = "GroupTwo";
-            this.GroupFactorTwo.MinimumWidth = 8;
-            this.GroupFactorTwo.Name = "GroupFactorTwo";
-            this.GroupFactorTwo.Width = 150;
-            // 
-            // OrderFactor
-            // 
-            this.OrderFactor.HeaderText = "OrderFactor";
-            this.OrderFactor.MinimumWidth = 8;
-            this.OrderFactor.Name = "OrderFactor";
-            this.OrderFactor.Width = 150;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(471, 311);
             this.Controls.Add(this.panelView);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.panelView.ResumeLayout(false);
             this.panelView.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.GroupGridView1)).EndInit();
             this.ToolStrip1.ResumeLayout(false);
             this.ToolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.GroupGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
