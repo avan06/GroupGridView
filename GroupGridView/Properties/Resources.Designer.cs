@@ -93,6 +93,16 @@ namespace GroupGridView.Properties {
         /// <summary>
         ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
         /// </summary>
+        internal static System.Drawing.Bitmap collapseAll_16x {
+            get {
+                object obj = ResourceManager.GetObject("collapseAll_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
         internal static System.Drawing.Bitmap expand_16x {
             get {
                 object obj = ResourceManager.GetObject("expand_16x", resourceCulture);
@@ -116,6 +126,16 @@ namespace GroupGridView.Properties {
         internal static System.Drawing.Bitmap expand_circle_16x {
             get {
                 object obj = ResourceManager.GetObject("expand_circle_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap expandAll_16x {
+            get {
+                object obj = ResourceManager.GetObject("expandAll_16x", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

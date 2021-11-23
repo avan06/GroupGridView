@@ -77,28 +77,34 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\collapse_16x.png" />
+    <None Include="Resources\collapse_16x.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\collapse_bold_blueNoHalo_16x.png" />
+    <None Include="Resources\collapse_bold_blueNoHalo_16x.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\collapse_circle_16x.png" />
+    <None Include="Resources\collapse_circle_16x.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\expand_16x.png" />
+    <None Include="Resources\expand_16x.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\expand_bold_blueNoHalo_16x.png" />
+    <None Include="Resources\expand_bold_blueNoHalo_16x.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\expand_circle_16x.png" />
+    <None Include="Resources\expand_circle_16x.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\separater_16x.png" />
+    <None Include="Resources\separater_16x.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\separater_end_16x.png" />
+    <None Include="Resources\separater_end_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\collapseAll_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\expandAll_16x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

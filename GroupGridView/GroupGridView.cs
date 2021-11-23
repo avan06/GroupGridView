@@ -26,7 +26,10 @@ namespace GroupGridView
             if (RowHeadersExpand == null) RowHeadersExpand = Properties.Resources.expand_circle_16x;
             if (RowHeadersSeparater == null) RowHeadersSeparater = Properties.Resources.separater_16x;
             if (RowHeadersSeparaterEnd == null) RowHeadersSeparaterEnd = Properties.Resources.separater_end_16x;
+            if (TopLeftHeaderCollapseAll == null) TopLeftHeaderCollapseAll = Properties.Resources.collapseAll_16x;
+            if (TopLeftHeaderExpandAll == null) TopLeftHeaderExpandAll = Properties.Resources.expandAll_16x;
 
+            TopLeftHeaderCell.Tag = "-";
             RowHeadersVisible = true;
             RowHeadersWidth = 16;
             RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
@@ -36,11 +39,18 @@ namespace GroupGridView
             (baseRows, groupRows) = DetermineBaseRows();
             ColorBases(baseRows);
             ResumeLayout();
+            CellPainting += GroupGridView_CellPainting;
             RowPostPaint += GroupGridView_RowPostPaint;
             RowHeaderMouseClick += GroupGridView_RowHeaderMouseClick;
             Sorted += GroupGridView_SortCompare;
             CellEndEdit += GroupGridView_CellEndEdit;
             Refresh();
+        }
+
+        protected override void OnCellMouseDown(DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex == -1 && e.ColumnIndex == -1) base.OnRowHeaderMouseClick(e);
+            else base.OnCellMouseDown(e);
         }
 
         public enum Order
@@ -79,6 +89,15 @@ namespace GroupGridView
         [Category("BaseRow"), Description("Defines a Color for 'Base' Rows in groups. Only effective when BaseRowColorEnabled is true.")]
         public Color BaseRowColor { get; set; } = Color.White;
 
+        [Category("TopLeftHeader"), Description("Determines if CollapseExpandAll button for TopLeft Header is enabled.")]
+        public bool TopLeftHeaderButtonEnabled { get; set; } = true;
+
+        [Category("TopLeftHeader"), Description("Defines a CollapseAll image for TopLeft Header.")]
+        public Bitmap TopLeftHeaderCollapseAll { get; set; }
+
+        [Category("TopLeftHeader"), Description("Defines a ExpandAll image for TopLeft Header.")]
+        public Bitmap TopLeftHeaderExpandAll { get; set; }
+
         [Category("RowHeaders"), Description("Defines a Collapse image of 'Base' Rows in groups.")]
         public Bitmap RowHeadersCollapse { get; set; }
 
@@ -95,6 +114,21 @@ namespace GroupGridView
         public Bitmap RowHeadersSeparaterEnd { get; set; }
 
         #region event
+        private void GroupGridView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (!RowHeadersVisible || !TopLeftHeaderButtonEnabled || e.RowIndex != -1 || e.ColumnIndex != -1) return;
+
+            Image image = null;
+            string topLeftValue = (string)TopLeftHeaderCell.Tag;
+
+            if (topLeftValue == "+") image = new Bitmap(TopLeftHeaderExpandAll);
+            else if (topLeftValue == "-") image = new Bitmap(TopLeftHeaderCollapseAll);
+            else return;
+
+            using (image) e.Graphics.DrawImage(image, e.CellBounds);
+            e.Handled = true;
+        }
+
         private void GroupGridView_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
             if (!RowHeadersVisible) return;
@@ -103,33 +137,35 @@ namespace GroupGridView
             Image image = null;
             Rectangle headerBounds = new Rectangle(e.RowBounds.X, e.RowBounds.Y + (e.RowBounds.Height - RowHeadersWidth) / 2, RowHeadersWidth, RowHeadersWidth);
 
-            switch (value)
+            if (value == "+") image = new Bitmap(RowHeadersExpand);
+            else if (value == "-") image = new Bitmap(RowHeadersCollapse);
+            else if (RowHeadersSeparaterWireEnabled && (value == "|" || value == "└"))
             {
-                case "+":
-                case "-":
-                    if (value == "+") image = new Bitmap(RowHeadersExpand);
-                    else if (value == "-") image = new Bitmap(RowHeadersCollapse);
-                    break;
-                case "|":
-                case "└":
-                    if (!RowHeadersSeparaterWireEnabled) return;
-                    headerBounds.Y = e.RowBounds.Y;
-                    headerBounds.Height = e.RowBounds.Height;
-                    if (value == "|") image = new Bitmap(RowHeadersSeparater);
-                    else if (value == "└") image = new Bitmap(RowHeadersSeparaterEnd);
-                    break;
-                default:
-                    return;
+                headerBounds.Y = e.RowBounds.Y;
+                headerBounds.Height = e.RowBounds.Height;
+                if (value == "|") image = new Bitmap(RowHeadersSeparater);
+                else if (value == "└") image = new Bitmap(RowHeadersSeparaterEnd);
             }
+            else return;
 
             using (image) e.Graphics.DrawImage(image, headerBounds);
         }
+
         /// <summary>
-        /// Determines to show(+) or hide(-) the rows by check RowHeader Tag value.
+        /// Determines to ExpandAll(+) or CollapseAll(-) all rows by check TopLeftHeader Tag value.
+        /// Determines to Expand(+) or Collapse(-) the rows by check RowHeader Tag value.
         /// </summary>
         private void GroupGridView_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.RowIndex < 0 || e.ColumnIndex > -1) return;
+            if (!RowHeadersVisible) return;
+            else if (TopLeftHeaderButtonEnabled && e.RowIndex == -1 && e.ColumnIndex == -1)
+            {
+                bool isCollapse = (string)TopLeftHeaderCell.Tag == "-";
+                CollapseExpandAll(isCollapse);
+                TopLeftHeaderCell.Tag = isCollapse ? "+" : "-";
+                return;
+            }
+            else if (e.RowIndex < 0 || e.ColumnIndex > -1) return;
 
             int idx = baseRows.IndexOf(e.RowIndex);
             if (idx == -1) return;

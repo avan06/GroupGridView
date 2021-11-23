@@ -61,6 +61,16 @@ ___
 `RowHeadersSeparaterEnd`: default built-in separaterEnd image
 > Defines a SeparaterEnd image for RowHeaders in groups.
 
+### TopLeftHeader
+
+`TopLeftHeaderButtonEnabled`: default true
+>Determines if CollapseExpandAll button for TopLeft Header is enabled.
+
+`TopLeftHeaderCollapseAll`: default built-in collapseA image
+>Defines a CollapseAll image for TopLeft Header.
+
+`TopLeftHeaderExpandAll`: default built-in expandAll image
+>Defines a ExpandAll image for TopLeft Header.
 ___
 
 ## Reference：
