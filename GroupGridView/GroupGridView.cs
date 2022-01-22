@@ -16,8 +16,6 @@ namespace GroupGridView
     public class GroupGridView : DataGridView
     {
         private bool rowHeadersExist;
-        private List<int> baseRows;
-        private List<List<int>> groupRows;
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -36,8 +34,8 @@ namespace GroupGridView
             rowHeadersExist = true;
 
             SuspendLayout();
-            (baseRows, groupRows) = DetermineBaseRows();
-            ColorBases(baseRows);
+            (BaseRows, GroupRows) = DetermineBaseRows();
+            ColorBases(BaseRowColorInterleaved);
             ResumeLayout();
             CellPainting += GroupGridView_CellPainting;
             RowPostPaint += GroupGridView_RowPostPaint;
@@ -58,6 +56,13 @@ namespace GroupGridView
             Ascending = 1,
             Descending = 2
         }
+
+        #region properties
+        [Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public List<int> BaseRows { get; private set; }
+
+        [Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public List<List<int>> GroupRows { get; private set; }
 
         [Category("Group"), Description("Determines if grouping behaviour is enabled. If set to false, it will be a normal gridview.")]
         public bool GroupByEnabled { get; set; } = true;
@@ -86,6 +91,9 @@ namespace GroupGridView
         [Category("BaseRow"), Description("Determines if defines a Color for 'Base' Rows is enabled.")]
         public bool BaseRowColorEnabled { get; set; } = true;
 
+        [Category("BaseRow"), Description("Determines if to make the group list color interleaved when BaseRowColorEnabled is enabled.")]
+        public bool BaseRowColorInterleaved { get; set; } = false;
+
         [Category("BaseRow"), Description("Defines a Color for 'Base' Rows in groups. Only effective when BaseRowColorEnabled is true.")]
         public Color BaseRowColor { get; set; } = Color.White;
 
@@ -112,6 +120,7 @@ namespace GroupGridView
 
         [Category("RowHeaders"), Description("Defines a SeparaterEnd image for RowHeaders in groups.")]
         public Bitmap RowHeadersSeparaterEnd { get; set; }
+        #endregion
 
         #region event
         private void GroupGridView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
@@ -167,13 +176,13 @@ namespace GroupGridView
             }
             else if (e.RowIndex < 0 || e.ColumnIndex > -1) return;
 
-            int idx = baseRows.IndexOf(e.RowIndex);
+            int idx = BaseRows.IndexOf(e.RowIndex);
             if (idx == -1) return;
 
             string value = (string)Rows[e.RowIndex].HeaderCell.Tag;
             if (value == null) return;
 
-            var group = groupRows[idx];
+            var group = GroupRows[idx];
             foreach (int rowid in group) if (rowid != e.RowIndex) Rows[rowid].Visible = value != "-";
 
             Rows[e.RowIndex].HeaderCell.Tag = value == "-" ? "+" : "-";
@@ -277,21 +286,31 @@ namespace GroupGridView
             return (baseRows, groupRows);
         }
 
-        private void ColorBases(List<int> baseRows)
+        private void ColorBases(bool interleaved = false)
         {
-            if (!BaseRowColorEnabled || baseRows.Count <= 0) return;
+            if (!BaseRowColorEnabled || BaseRows.Count <= 0) return;
 
-            foreach (int rowId in baseRows)
+            Color backColor = default;
+            for (int idx = 0; idx < Rows.Count; idx++)
             {
-                Rows[rowId].DefaultCellStyle.BackColor = BaseRowColor;
-                Rows[rowId].HeaderCell.Style.BackColor = BaseRowColor;
+                string tag = (string)Rows[idx].HeaderCell.Tag;
+                if (tag == "+" || tag == "-") backColor = backColor == default ? BaseRowColor : default;
+                else if (interleaved && (tag == "|" || tag == "└")) { }
+                else
+                {
+                    backColor = default;
+                    continue;
+                }
+
+                Rows[idx].DefaultCellStyle.BackColor = backColor;
+                Rows[idx].HeaderCell.Style.BackColor = backColor;
             }
         }
 
         private void ClearAll()
         {
-            if (baseRows != null) baseRows.Clear();
-            if (groupRows != null) groupRows.Clear();
+            if (BaseRows != null) BaseRows.Clear();
+            if (GroupRows != null) GroupRows.Clear();
             for (int rowId = 0; rowId <= RowCount - 1; rowId++)
             {
                 Rows[rowId].Visible = true;
@@ -311,7 +330,7 @@ namespace GroupGridView
             {
                 if ((string)Rows[rowIdx].HeaderCell.Tag != (isCollapse ? "-" : "+") || !Rows[rowIdx].Visible) continue;
 
-                foreach (List<int> groupIdx in groupRows)
+                foreach (List<int> groupIdx in GroupRows)
                 {
                     if (!groupIdx.Contains(rowIdx)) continue;
 
@@ -329,8 +348,8 @@ namespace GroupGridView
         {
             SuspendLayout();
             ClearAll();
-            (baseRows, groupRows) = DetermineBaseRows();
-            ColorBases(baseRows);
+            (BaseRows, GroupRows) = DetermineBaseRows();
+            ColorBases(BaseRowColorInterleaved);
             Refresh();
             ResumeLayout();
         }

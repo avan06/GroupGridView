@@ -1,11 +1,11 @@
-# GroupGridView (C#)
+﻿# GroupGridView (C#)
 
 This is an Expandable/Collapsable grid view which extends DataGridView.
 
 ___
 
-![view1](https://raw.githubusercontent.com/avan06/GroupGridView/main/view1.png)
-![view2](https://raw.githubusercontent.com/avan06/GroupGridView/main/view2.png)
+![view1](assets/view1.png)
+![view2](assets/view2.png)
 
 
 ## Attribute
@@ -43,6 +43,9 @@ ___
 
 `BaseRowColor`: default White (Only effective when BaseRowColorEnabled is true)
 > Defines a Color for 'Base' Rows in groups.
+
+`BaseRowColorInterleaved`: default false
+> Determines if to make the group list color interleaved.
 
 ### RowHeaders
 
