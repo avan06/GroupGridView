@@ -140,7 +140,7 @@
   <data name="GroupGridView1.RowHeadersCollapse" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAAOZJREFUOE+tkz0OgkAQhTmBp3ETT8ApOJElJTUnoMEreAoSKsVCbSho1vlwxiw/
+        vwAADr8BOAVTJAAAAOZJREFUOE+tkz0OgkAQhTmBp3ETT8ApOJElJTUnoMEreAoSKsVCbSho1vlwxiw/
         ASNO8pLdmfdeZpYhGkfbtk6QCSpBp+BMziltGlLcCfK6rn2apj5JEh/HcQ/O5KjBgauyd6j4XBRFLyjL
         k79emgHIUYMDd2Ail9zETXPrBY/7cwLygUluYkdra2Jg3cDVcRwGGfNZ23PCEHDgokGLQcUjfSM2WBdo
         Mei4mMHhuF/EyKD7i8FnBDNZgvHCETY/4rbPqLuwukiheLBIhFxmVzkUkwvEw1Um1OS3nykMKS7+zmKo
@@ -150,7 +150,7 @@
   <data name="GroupGridView1.RowHeadersExpand" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAAO1JREFUOE+tk0EOgjAQRTmBp7GJJ+AUnMglS9acgA1ewVOQsFJcqBsWbOq82jEt
+        vwAADr8BOAVTJAAAAO1JREFUOE+tk0EOgjAQRTmBp7GJJ+AUnMglS9acgA1ewVOQsFJcqBsWbOq82jEt
         VE3ESX5Cp//9tDBk8xrH0YgqUSeavHimZ7xtWbK5EdV939uyLG1RFDbPcyee6bGHB6/HnuXhY9M0Dmjb
         gz2fhkj02MODNwqRRa3wMFwccLveF6IfhNQKG46Wgnf7rVMYoCH+OoaAivvpsdWcCkB48MLAEtDxkuYw
         SgUgPQUsARMLDVDonWYB018CXlfQEFUIqdQXXmH1S1z3Gf0sfB2kEI4GiZJFcpRDmF4Ax6NM+ZDffqaw
@@ -160,28 +160,28 @@
   <data name="GroupGridView1.RowHeadersSeparater" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAACVJREFUOE9j+P//P04MBEAKuxwMYxWE4VEDRg0A4VEDhoYB/xkAk07dPxsrQhUA
+        vwAADr8BOAVTJAAAACVJREFUOE9j+P//P04MBEAKuxwMYxWE4VEDRg0A4VEDhoYB/xkAk07dPxsrQhUA
         AAAASUVORK5CYII=
 </value>
   </data>
   <data name="GroupGridView1.RowHeadersSeparaterEnd" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAADpJREFUOE/tzEEKADAIA0H//+moB29bau4WhsKWJiQ91amL3wbGcQM30Hrgiz46
+        vwAADr8BOAVTJAAAADpJREFUOE/tzEEKADAIA0H//+moB29bau4WhsKWJiQ91amL3wbGcQM30Hrgiz46
         MDowOjA6MDow7ikScJDZQ7uJZW8AAAAASUVORK5CYII=
 </value>
   </data>
   <data name="GroupGridView1.TopLeftHeaderCollapseAll" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EAAACxABrSO9dQAAAElJREFUOE9jgIFv3779JwdDtUMMcHJyIgnDDUA2kViMYQC66fgwTgNANCE8Egxg
+        DQAACw0B7QfALAAAAElJREFUOE9jgIFv3779JwdDtUMMcHJyIgnDDUA2kViMYQC66fgwTgNANCE8Egxg
         CJ6DExNlACE83A0gFsMMQzGAVAzWSDlgYAAAZTTG08r/1jUAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="GroupGridView1.TopLeftHeaderExpandAll" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EAAACxABrSO9dQAAAFdJREFUOE9jgIFv3779JwdDtUMMcHJyIgnDDUA2kViMYQC66fgwTgNANCFMkgEM
+        DQAACw0B7QfALAAAAFdJREFUOE9jgIFv3779JwdDtUMMcHJyIgnDDUA2kViMYQC66fgwTgNANCFMkgEM
         wXMwxIaAASBNuDBRBiBjmCZkPMQMwIbxGkAshhmGYgCpGKyRcsDAAAD9f7shXWRX6QAAAABJRU5ErkJg
         gg==
 </value>

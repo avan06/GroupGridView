@@ -1,0 +1,97 @@
+﻿using System;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
+
+namespace GroupGridView
+{
+    /// <summary>
+    /// [Reference]
+    /// create datagridview column with NumericUpDown.
+    /// https://stackoverflow.com/a/55788490
+    /// </summary>
+    public class DataGridViewUpDownColumn : DataGridViewColumn
+    {
+        public DataGridViewUpDownColumn() : base(new DataGridViewUpDownCell()) { }
+        public override DataGridViewCell CellTemplate
+        {
+            get => base.CellTemplate;
+            set
+            {
+                if (value != null && !value.GetType().IsAssignableFrom(typeof(DataGridViewUpDownCell))) throw new InvalidCastException("Must be a DataGridViewUpDownCell");
+                base.CellTemplate = value;
+            }
+        }
+    }
+
+    public class DataGridViewUpDownCell : DataGridViewTextBoxCell
+    {
+        public DataGridViewUpDownCell() : base() { }
+        public override void InitializeEditingControl(int rowIndex, object initialFormattedValue, DataGridViewCellStyle dataGridViewCellStyle)
+        {
+            base.InitializeEditingControl(rowIndex, initialFormattedValue, dataGridViewCellStyle);
+            DataGridViewUpDownEditingControl ctl = DataGridView.EditingControl as DataGridViewUpDownEditingControl;
+            ctl.Text = (string)Value;
+        }
+        public override Type EditType => typeof(DataGridViewUpDownEditingControl);
+        public override object DefaultNewRowValue => null; //未編集の新規行に余計な初期値が出ないようにする
+    }
+
+    public class DataGridViewUpDownEditingControl : UpDownBase, IDataGridViewEditingControl
+    {
+        #region DataGridViewEditingControl
+        public int EditingControlRowIndex { get; set; }
+        public bool EditingControlValueChanged { get; set; }
+        public DataGridView EditingControlDataGridView { get; set; }
+        public object EditingControlFormattedValue
+        {
+            get => GetEditingControlFormattedValue(DataGridViewDataErrorContexts.Formatting);
+            set => Text = (string)value;
+        }
+        public object GetEditingControlFormattedValue(DataGridViewDataErrorContexts context) => Text;
+        public Cursor EditingPanelCursor => Cursors.Default;
+        public bool RepositionEditingControlOnValueChange => false;
+        public void ApplyCellStyleToEditingControl(DataGridViewCellStyle dataGridViewCellStyle)
+        {
+            Font = dataGridViewCellStyle.Font;
+            ForeColor = dataGridViewCellStyle.ForeColor;
+            BackColor = dataGridViewCellStyle.BackColor;
+        }
+        public bool EditingControlWantsInputKey(Keys keyData, bool dataGridViewWantsInputKey)
+        {
+            return (keyData == Keys.Left || keyData == Keys.Right || keyData == Keys.Up || keyData == Keys.Down ||
+                keyData == Keys.Home || keyData == Keys.End || keyData == Keys.PageDown || keyData == Keys.PageUp);
+        }
+        public void PrepareEditingControlForEdit(bool selectAll) { }
+        protected override void OnTextChanged(EventArgs e)
+        {
+            base.OnTextChanged(e);
+            EditingControlValueChanged = true;
+            EditingControlDataGridView.NotifyCurrentCellDirty(true);
+        }
+        #endregion
+
+        #region UpDown
+        public override void UpButton()
+        {
+            try
+            {
+                if (!Regex.IsMatch(Text, @"^-?[0-9][0-9,\.]*$")) return;
+                decimal value = decimal.Parse(Text) + 1;
+                Text = value.ToString();
+            }
+            catch (Exception) {}
+        }
+        public override void DownButton()
+        {
+            try
+            {
+                if (!Regex.IsMatch(Text, @"^-?[0-9][0-9,\.]*$")) return;
+                decimal value = decimal.Parse(Text) - 1;
+                Text = value.ToString();
+            }
+            catch (Exception) {}
+        }
+        protected override void UpdateEditText() { }
+        #endregion
+    }
+}

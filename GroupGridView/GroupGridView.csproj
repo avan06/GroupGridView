@@ -52,6 +52,7 @@
     <Compile Include="GroupGridView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="DataGridViewUpDownColumn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

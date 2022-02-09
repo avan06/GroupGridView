@@ -202,6 +202,7 @@ namespace GroupGridView
             GroupRefresh();
         }
         #endregion
+
         #region private
         private (List<int> baseRows, List<List<int>> groupRows) DetermineBaseRows()
         {

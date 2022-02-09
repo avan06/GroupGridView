@@ -40,7 +40,7 @@ namespace GroupGridViewApp
             this.GroupGridView1 = new GroupGridView.GroupGridView();
             this.GroupOne = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GroupFactorTwo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OrderFactor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OrderFactor = new GroupGridView.DataGridViewUpDownColumn();
             this.panelView.SuspendLayout();
             this.ToolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GroupGridView1)).BeginInit();
@@ -155,6 +155,8 @@ namespace GroupGridViewApp
             this.OrderFactor.HeaderText = "OrderFactor";
             this.OrderFactor.MinimumWidth = 8;
             this.OrderFactor.Name = "OrderFactor";
+            this.OrderFactor.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.OrderFactor.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.OrderFactor.Width = 150;
             // 
             // Form1
@@ -179,13 +181,13 @@ namespace GroupGridViewApp
 
         private System.Windows.Forms.Panel panelView;
         internal GroupGridView.GroupGridView GroupGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GroupOne;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GroupFactorTwo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn OrderFactor;
         private System.Windows.Forms.ToolStrip ToolStrip1;
         private System.Windows.Forms.ToolStripButton ToolStripExpandAll;
         private System.Windows.Forms.ToolStripButton ToolStripCollapseAll;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GroupOne;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GroupFactorTwo;
+        private DataGridViewUpDownColumn OrderFactor;
     }
 }
 
