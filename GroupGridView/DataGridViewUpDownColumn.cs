@@ -29,9 +29,10 @@ namespace GroupGridView
         public override void InitializeEditingControl(int rowIndex, object initialFormattedValue, DataGridViewCellStyle dataGridViewCellStyle)
         {
             base.InitializeEditingControl(rowIndex, initialFormattedValue, dataGridViewCellStyle);
-            DataGridViewUpDownEditingControl ctl = DataGridView.EditingControl as DataGridViewUpDownEditingControl;
-            ctl.Text = (string)Value;
+            DataGridViewUpDownEditingControl upDownControl = DataGridView.EditingControl as DataGridViewUpDownEditingControl;
+            if (upDownControl != null) upDownControl.Text = (string)Value;
         }
+
         public override Type EditType => typeof(DataGridViewUpDownEditingControl);
         public override object DefaultNewRowValue => null; //未編集の新規行に余計な初期値が出ないようにする
     }
@@ -39,6 +40,8 @@ namespace GroupGridView
     public class DataGridViewUpDownEditingControl : UpDownBase, IDataGridViewEditingControl
     {
         #region DataGridViewEditingControl
+        public event DataGridViewUpDownCellEventHandler UpDown;
+        public int EditingControlColIndex { get => EditingControlDataGridView.CurrentCell.ColumnIndex; }
         public int EditingControlRowIndex { get; set; }
         public bool EditingControlValueChanged { get; set; }
         public DataGridView EditingControlDataGridView { get; set; }
@@ -56,14 +59,16 @@ namespace GroupGridView
             ForeColor = dataGridViewCellStyle.ForeColor;
             BackColor = dataGridViewCellStyle.BackColor;
         }
-        public bool EditingControlWantsInputKey(Keys keyData, bool dataGridViewWantsInputKey)
-        {
-            return (keyData == Keys.Left || keyData == Keys.Right || keyData == Keys.Up || keyData == Keys.Down ||
-                keyData == Keys.Home || keyData == Keys.End || keyData == Keys.PageDown || keyData == Keys.PageUp);
+        public bool EditingControlWantsInputKey(Keys keyData, bool dataGridViewWantsInputKey) =>
+            (keyData == Keys.Left || keyData == Keys.Right || keyData == Keys.Up || keyData == Keys.Down ||
+             keyData == Keys.Home || keyData == Keys.End || keyData == Keys.PageDown || keyData == Keys.PageUp);
+        public void PrepareEditingControlForEdit(bool selectAll) {
+            if (selectAll) Select(0, Text.Length);
         }
-        public void PrepareEditingControlForEdit(bool selectAll) { }
         protected override void OnTextChanged(EventArgs e)
         {
+            if ((string)EditingControlDataGridView.CurrentCell.Value != Text) UpDown?.Invoke(this, new DataGridViewUpDownCellEventArgs(EditingControlColIndex, EditingControlRowIndex, Text));
+
             base.OnTextChanged(e);
             EditingControlValueChanged = true;
             EditingControlDataGridView.NotifyCurrentCellDirty(true);
@@ -93,5 +98,12 @@ namespace GroupGridView
         }
         protected override void UpdateEditText() { }
         #endregion
+    }
+    public delegate void DataGridViewUpDownCellEventHandler(object sender, DataGridViewUpDownCellEventArgs e);
+
+    public class DataGridViewUpDownCellEventArgs : DataGridViewCellEventArgs
+    {
+        public string Text { get; private set; }
+        public DataGridViewUpDownCellEventArgs(int columnIndex, int rowIndex, string text) : base(columnIndex, rowIndex) { Text = text; }
     }
 }
