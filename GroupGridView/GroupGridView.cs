@@ -284,6 +284,9 @@ namespace GroupGridView
             {
             }
 
+            confirmedRows.Clear();
+            confirmedRows = null;
+
             return (baseRows, groupRows);
         }
 
