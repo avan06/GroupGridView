@@ -10,6 +10,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupGridViewApp", "GroupGr
 		{423C7A3D-15E2-4EFB-B50D-282D8EBCAF50} = {423C7A3D-15E2-4EFB-B50D-282D8EBCAF50}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9146920A-5348-47C3-A01D-C5D704D8F408}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

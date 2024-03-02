@@ -328,20 +328,21 @@ namespace GroupGridView
         /// collapse or expand all rows.
         /// isCollapse: true is collapse, false is expand.
         /// </summary>
-        public void CollapseExpandAll(bool isCollapse)
+        public void CollapseExpandAll(bool? isCollapse = null)
         {
+            if (isCollapse == null) isCollapse = (string)Rows[0].HeaderCell.Tag == "-";
             for (int rowIdx = 0; rowIdx <= Rows.Count - 1; rowIdx++)
             {
-                if ((string)Rows[rowIdx].HeaderCell.Tag != (isCollapse ? "-" : "+") || !Rows[rowIdx].Visible) continue;
+                if ((string)Rows[rowIdx].HeaderCell.Tag != ((bool)isCollapse ? "-" : "+") || !Rows[rowIdx].Visible) continue;
 
                 foreach (List<int> groupIdx in GroupRows)
                 {
                     if (!groupIdx.Contains(rowIdx)) continue;
 
-                    foreach (int sRowid in groupIdx) if (sRowid != rowIdx) Rows[sRowid].Visible = !isCollapse;
+                    foreach (int sRowid in groupIdx) if (sRowid != rowIdx) Rows[sRowid].Visible = !(bool)isCollapse;
                 }
 
-                Rows[rowIdx].HeaderCell.Tag = (!isCollapse ? "-" : "+");
+                Rows[rowIdx].HeaderCell.Tag = (!(bool)isCollapse ? "-" : "+");
             }
         }
 

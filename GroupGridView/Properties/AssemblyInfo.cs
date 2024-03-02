@@ -2,9 +2,9 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-// 組件的一般資訊是由下列的屬性集控制。
-// 變更這些屬性的值即可修改組件的相關
-// 資訊。
+// General Information about an assembly is controlled through the following
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
 [assembly: AssemblyTitle("GroupGridView")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
@@ -14,23 +14,23 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-// 將 ComVisible 設為 false 可對 COM 元件隱藏
-// 組件中的類型。若必須從 COM 存取此組件中的類型，
-// 的類型，請在該類型上將 ComVisible 屬性設定為 true。
+// Setting ComVisible to false makes the types in this assembly not visible
+// to COM components.  If you need to access a type in this assembly from
+// COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-// 下列 GUID 為專案公開 (Expose) 至 COM 時所要使用的 typelib ID
+// The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("423c7a3d-15e2-4efb-b50d-282d8ebcaf50")]
 
-// 組件的版本資訊由下列四個值所組成: 
+// Version information for an assembly consists of the following four values:
 //
-//      主要版本
-//      次要版本
-//      組建編號
-//      修訂編號
+//      Major Version
+//      Minor Version
+//      Build Number
+//      Revision
 //
-// 您可以指定所有的值，也可以使用 '*' 將組建和修訂編號
-// 設為預設，如下所示:
+// You can specify all the values or you can default the Build and Revision Numbers
+// by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.1.0")]
+[assembly: AssemblyFileVersion("1.0.1.0")]
