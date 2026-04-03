@@ -95,6 +95,9 @@ namespace GroupGridViewApp
             this.GroupGridView1.TopLeftHeaderButtonEnabled = true;
             this.GroupGridView1.TopLeftHeaderCollapseAll = ((System.Drawing.Bitmap)(resources.GetObject("GroupGridView1.TopLeftHeaderCollapseAll")));
             this.GroupGridView1.TopLeftHeaderExpandAll = ((System.Drawing.Bitmap)(resources.GetObject("GroupGridView1.TopLeftHeaderExpandAll")));
+            this.GroupGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.GroupGridView1_CellValueChanged);
+            this.GroupGridView1.CurrentCellDirtyStateChanged += new System.EventHandler(this.GroupGridView1_CurrentCellDirtyStateChanged);
+            this.GroupGridView1.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.GroupGridView1_EditingControlShowing);
             // 
             // ToolStrip1
             // 
