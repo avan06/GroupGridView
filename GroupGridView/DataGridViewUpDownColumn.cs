@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -12,6 +13,18 @@ namespace GroupGridView
     public class DataGridViewUpDownColumn : DataGridViewColumn
     {
         public DataGridViewUpDownColumn() : base(new DataGridViewUpDownCell()) { }
+
+        [Category("Data")]
+        [Description("The amount to increment or decrement the value.")]
+        [DefaultValue(1.0)]
+        public decimal Step { get; set; } = 1m;
+
+        public override object Clone()
+        {
+            DataGridViewUpDownColumn col = (DataGridViewUpDownColumn)base.Clone();
+            col.Step = this.Step;
+            return col;
+        }
 
         public override DataGridViewCell CellTemplate
         {
@@ -28,11 +41,19 @@ namespace GroupGridView
     public class DataGridViewUpDownCell : DataGridViewTextBoxCell
     {
         public DataGridViewUpDownCell() : base() { }
+
         public override void InitializeEditingControl(int rowIndex, object initialFormattedValue, DataGridViewCellStyle dataGridViewCellStyle)
         {
             base.InitializeEditingControl(rowIndex, initialFormattedValue, dataGridViewCellStyle);
-            DataGridViewUpDownEditingControl upDownControl = DataGridView.EditingControl as DataGridViewUpDownEditingControl;
-            if (upDownControl != null) upDownControl.Text = (string)Value;
+            if (DataGridView.EditingControl is DataGridViewUpDownEditingControl upDownControl)
+            {
+                upDownControl.Text = (string)Value;
+
+                if (OwningColumn is DataGridViewUpDownColumn parentCol)
+                {
+                    upDownControl.Step = parentCol.Step;
+                }
+            }
         }
 
         public override Type EditType => typeof(DataGridViewUpDownEditingControl);
@@ -43,12 +64,6 @@ namespace GroupGridView
     public class DataGridViewUpDownEditingControl : UpDownBase, IDataGridViewEditingControl
     {
         #region DataGridViewEditingControl
-        /// <summary>
-        /// Notifies up/down adjustments via a delta event. 
-        /// Suitable for the outer application to apply changes to multiple cells simultaneously.
-        /// </summary>
-        public event DataGridViewUpDownDeltaEventHandler UpDownDelta;
-
         public int EditingControlColIndex { get => EditingControlDataGridView.CurrentCell.ColumnIndex; }
 
         public int EditingControlRowIndex { get; set; }
@@ -95,26 +110,48 @@ namespace GroupGridView
             EditingControlValueChanged = true;
             EditingControlDataGridView.NotifyCurrentCellDirty(true);
         }
-
-        /// <summary>
-        /// This event is triggered whenever the text changes. 
-        /// Deprecated: Use UpDownDelta for synchronized relative updates.
-        /// </summary>
-        [Obsolete("UpDown event is deprecated. Please use UpDownDelta event for better support of relative value synchronization and multiple cell selection.")]
-        public event DataGridViewUpDownCellEventHandler UpDown;
         #endregion
 
         #region UpDown
-
         /// <summary>
         /// Step value (can be a decimal)
         /// </summary>
         public decimal Step { get; set; } = 1m;
 
+        /// <summary>
+        /// Notifies up/down adjustments via a delta event. 
+        /// Suitable for the outer application to apply changes to multiple cells simultaneously.
+        /// </summary>
+        public event DataGridViewUpDownDeltaEventHandler UpDownDelta;
+
+        public override void UpButton() => FireUpDownDelta(Step);
+        public override void DownButton() => FireUpDownDelta(-Step);
+
         // Internal state used to determine if the action is a continuous repeat (holding mouse or key down)
         private bool _isMouseDown = false;
         private bool _isKeyDownUp = false;
         private bool _isKeyDownDown = false;
+
+        private bool IsRepeating() => _isMouseDown || _isKeyDownUp || _isKeyDownDown;
+
+        private void FireUpDownDelta(decimal delta)
+        {
+            try
+            {
+                if (!Regex.IsMatch(Text, @"^-?[0-9][0-9,\.]*$")) return;
+
+                decimal oldValue = decimal.Parse(Text);
+                decimal newValue = oldValue + delta;
+                Text = newValue.ToString();
+
+                // Fire event with current repeat status
+                // When called from UpButton, IsRepeating() is true.
+                // When called from OnMouseUp (after setting flag), IsRepeating() is false.
+                UpDownDelta?.Invoke(this, new DataGridViewUpDownDeltaEventArgs(
+                    EditingControlColIndex, EditingControlRowIndex, Text, delta, newValue, IsRepeating()));
+            }
+            catch { }
+        }
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
@@ -125,7 +162,17 @@ namespace GroupGridView
         protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
-            _isMouseDown = false;
+
+            if (_isMouseDown)
+            {
+                _isMouseDown = false;
+
+                // If no keys are being held after releasing the mouse, the interaction has completely finished.
+                if (!IsRepeating())
+                {
+                    FireUpDownDelta(0); // Trigger one last time with Delta 0 and IsRepeat = false
+                }
+            }
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
@@ -138,45 +185,36 @@ namespace GroupGridView
         protected override void OnKeyUp(KeyEventArgs e)
         {
             base.OnKeyUp(e);
-            if (e.KeyCode == Keys.Up) _isKeyDownUp = false;
-            if (e.KeyCode == Keys.Down) _isKeyDownDown = false;
-        }
 
-        private bool IsRepeating() => _isMouseDown || _isKeyDownUp || _isKeyDownDown;
-
-        public override void UpButton()
-        {
-            try
+            // Only process the state if the Up or Down key was released
+            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
             {
-                if (!Regex.IsMatch(Text, @"^-?[0-9][0-9,\.]*$")) return;
+                // Record the repeat status prior to the key release
+                bool wasRepeating = IsRepeating();
 
-                decimal oldValue = decimal.Parse(Text);
-                decimal delta = Step;
-                decimal newValue = oldValue + delta;
-                Text = newValue.ToString();
+                if (e.KeyCode == Keys.Up) _isKeyDownUp = false;
+                if (e.KeyCode == Keys.Down) _isKeyDownDown = false;
 
-                // Fire the delta event (including column/row information)
-                UpDownDelta?.Invoke(this, new DataGridViewUpDownDeltaEventArgs(EditingControlColIndex, EditingControlRowIndex, Text, delta, newValue, IsRepeating()));
+                // if the interaction is no longer repeating after the release, 
+                // send the final signal (Delta 0, IsRepeat = false)
+                if (wasRepeating && !IsRepeating())
+                {
+                    FireUpDownDelta(0); // Trigger one last time with Delta 0 and IsRepeat = false
+                }
             }
-            catch (Exception) { }
         }
-        public override void DownButton()
+
+        protected override void UpdateEditText()
         {
-            try
-            {
-                if (!Regex.IsMatch(Text, @"^-?[0-9][0-9,\.]*$")) return;
-
-                decimal oldValue = decimal.Parse(Text);
-                decimal delta = -Step;
-                decimal newValue = oldValue + delta;
-                Text = newValue.ToString();
-
-                // Fire the delta event (including column/row information)
-                UpDownDelta?.Invoke(this, new DataGridViewUpDownDeltaEventArgs(EditingControlColIndex, EditingControlRowIndex, Text, delta, newValue, IsRepeating()));
-            }
-            catch (Exception) { }
+            throw new NotImplementedException();
         }
-        protected override void UpdateEditText() { }
+
+        /// <summary>
+        /// This event is triggered whenever the text changes. 
+        /// Deprecated: Use UpDownDelta for synchronized relative updates.
+        /// </summary>
+        [Obsolete("UpDown event is deprecated. Please use UpDownDelta event for better support of relative value synchronization and multiple cell selection.")]
+        public event DataGridViewUpDownCellEventHandler UpDown;
         #endregion
     }
 
@@ -193,6 +231,7 @@ namespace GroupGridView
         /// Gets the text content associated with this instance.
         /// </summary>
         public string Text { get; private set; }
+
         /// <summary>
         /// The amount of change (can be negative)
         /// </summary>

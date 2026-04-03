@@ -153,6 +153,11 @@ namespace GroupGridViewApp
             this.GroupFactorTwo.Name = "GroupFactorTwo";
             this.GroupFactorTwo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.GroupFactorTwo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.GroupFactorTwo.Step = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.GroupFactorTwo.Width = 150;
             // 
             // OrderFactor
@@ -162,6 +167,11 @@ namespace GroupGridViewApp
             this.OrderFactor.Name = "OrderFactor";
             this.OrderFactor.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.OrderFactor.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.OrderFactor.Step = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.OrderFactor.Width = 150;
             // 
             // Form1
